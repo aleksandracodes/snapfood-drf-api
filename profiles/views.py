@@ -10,6 +10,7 @@ from rest_framework.response import Response
 # Internal:
 from .models import Profile
 from .serializers import ProfileSerializer
+from snapfood_drf_api.permissions import IsOwnerOrReadOnly
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
@@ -28,12 +29,15 @@ class ProfileDetail(APIView):
     A class for the Profile Details
     """
     serializer_class = ProfileSerializer
+    permission_classes = [IsOwnerOrReadOnly]
+
     def get_object(self, pk):
         """
         Fetch the profile by id
         """
         try:
             profile = Profile.objects.get(pk=pk)
+            self.check_object_permissions(self.request, profile)
             return profile
         except Profile.DoesNotExist:
             raise Http404
