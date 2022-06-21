@@ -2,6 +2,7 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # 3rd party:
 from django.http import Http404
+from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -26,6 +27,7 @@ class ProfileDetail(APIView):
     """
     A class for the Profile Details
     """
+    serializer_class = ProfileSerializer
     def get_object(self, pk):
         """
         Fetch the profile by id
@@ -41,3 +43,13 @@ class ProfileDetail(APIView):
         serializer = ProfileSerializer(profile)
         return Response(serializer.data)
 
+    def put(self, request, pk):
+        """
+        Update a profile by id
+        """
+        profile = self.get_object(pk)
+        serializer = ProfileSerializer(profile, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
