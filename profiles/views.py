@@ -3,6 +3,7 @@
 # 3rd party:
 from django.http import Http404
 from rest_framework import status
+from rest_framework import permissions
 from rest_framework.views import APIView
 from rest_framework.response import Response
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -73,8 +74,8 @@ class ProfileDetail(APIView):
         """
         Delete a profile by id
         """
-        profile = self.get_object(pk)
-        profile.delete()
+        user = self.request.user
+        user.delete()
         return Response(
             status=status.HTTP_204_NO_CONTENT
         )
