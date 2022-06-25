@@ -23,3 +23,14 @@ class LikeSerializer(serializers.ModelSerializer):
             'created_on',
             'post',
         ]
+
+    def create(self, validated_data):
+        """
+        Handle possible duplicates of likes by the same user
+        """
+        try:
+            return super().create(validated_data)
+        except IntegrityError:
+            raise serializers.ValidationError({
+                'detail': 'possible duplication'
+            })
