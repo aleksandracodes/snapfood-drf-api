@@ -31,12 +31,17 @@ class PostList(generics.ListCreateAPIView):
         )
     ).order_by('-created_on')
     filter_backends = [
-        filters.OrderingFilter
+        filters.OrderingFilter,
+        filters.SearchFilter,
     ]
     ordering_fields = [
         'comments_number',
         'likes_number',
         'likes__created_on',
+    ]
+    search_fields = [
+        'owner__username',
+        'title',
     ]
 
     def perform_create(self, serializer):
