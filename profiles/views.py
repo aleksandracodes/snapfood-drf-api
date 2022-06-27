@@ -12,6 +12,7 @@ from .serializers import ProfileSerializer
 from snapfood_drf_api.permissions import IsOwnerOrReadOnly
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+
 class ProfileList(generics.ListCreateAPIView):
     """
     A class view for the ProfileList
@@ -45,6 +46,7 @@ class ProfileList(generics.ListCreateAPIView):
     search_fields = [
         'owner__username',
     ]
+
 
 class ProfileDetail(generics.RetrieveUpdateDestroyAPIView):
     """
