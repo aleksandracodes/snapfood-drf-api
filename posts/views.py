@@ -3,6 +3,7 @@
 # 3rd party:
 from django.db.models import Count
 from rest_framework import generics, permissions, filters
+from django_filters.rest_framework import DjangoFilterBackend
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 # Internal:
@@ -33,6 +34,12 @@ class PostList(generics.ListCreateAPIView):
     filter_backends = [
         filters.OrderingFilter,
         filters.SearchFilter,
+        DjangoFilterBackend,
+    ]
+    filterset_fields = [
+        'owner__followed__owner__profile',  # return specific user post feed
+        'likes__owner__profile',  # return posts a specific user liked
+        'owner__profile',  # return posts owned by a specific user
     ]
     ordering_fields = [
         'comments_number',
