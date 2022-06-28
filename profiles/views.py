@@ -51,6 +51,8 @@ class ProfileList(generics.ListCreateAPIView):
     filterset_fields = [
         # filter profiles that are following a specific profile
         'owner__following__followed__profile',
+        # get profiles that are followed by a specific profile
+        'owner__followed__owner__profile',
     ]
 
 
