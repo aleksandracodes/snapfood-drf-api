@@ -36,11 +36,6 @@ class PostList(generics.ListCreateAPIView):
         filters.SearchFilter,
         DjangoFilterBackend,
     ]
-    filterset_fields = [
-        'owner__followed__owner__profile',  # return specific user post feed
-        'likes__owner__profile',  # return posts a specific user liked
-        'owner__profile',  # return posts owned by a specific user
-    ]
     ordering_fields = [
         'comments_number',
         'likes_number',
@@ -49,6 +44,11 @@ class PostList(generics.ListCreateAPIView):
     search_fields = [
         'owner__username',
         'title',
+    ]
+    filterset_fields = [
+        'owner__followed__owner__profile'  # return specific user post feed
+        'likes__owner__profile'  # return posts a specific user liked
+        'owner__profile',  # return posts owned by a specific user
     ]
 
     def perform_create(self, serializer):
