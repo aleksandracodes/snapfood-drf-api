@@ -4,6 +4,7 @@
 from django.db.models import Count
 from rest_framework import generics, status, filters
 from rest_framework.response import Response
+from django_filters.rest_framework import DjangoFilterBackend
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 # Internal:
@@ -35,6 +36,7 @@ class ProfileList(generics.ListCreateAPIView):
     filter_backends = [
         filters.OrderingFilter,
         filters.SearchFilter,
+        DjangoFilterBackend,
     ]
     ordering_fields = [
         'posts_number',
@@ -45,6 +47,10 @@ class ProfileList(generics.ListCreateAPIView):
     ]
     search_fields = [
         'owner__username',
+    ]
+    filterset_fields = [
+        # filter profiles that are following a specific profile
+        'owner__following__followed__profile',
     ]
 
 
