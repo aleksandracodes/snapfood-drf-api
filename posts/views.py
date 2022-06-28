@@ -46,8 +46,8 @@ class PostList(generics.ListCreateAPIView):
         'title',
     ]
     filterset_fields = [
-        'owner__followed__owner__profile'  # return specific user post feed
-        'likes__owner__profile'  # return posts a specific user liked
+        'owner__followed__owner__profile',  # return specific user post feed
+        'likes__owner__profile',  # return posts a specific user liked
         'owner__profile',  # return posts owned by a specific user
     ]
 
