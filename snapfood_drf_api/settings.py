@@ -38,6 +38,11 @@ REST_FRAMEWORK = {
         'rest_framework.pagination.PageNumberPagination',
         'PAGE_SIZE': 10,
 }
+# Set the default renderer to JSON for the production environment
+if 'DEV' not in os.environ:
+    REST_FRAMEWORK['DEFAULT_RENDERER_CLASSES'] = [
+        'rest_framework.renderers.JSONRenderer',
+    ]
 
 REST_USE_JWT = True
 JWT_AUTH_SECURE = True
