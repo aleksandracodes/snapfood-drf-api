@@ -17,8 +17,6 @@ This repository contains the API set up using Django REST Framework for the Snap
 The back-end section of the project focuses on its administration side and covers one user story:
 - As an admin, I want to be able to create, edit and delete the users, posts, comments and likes, so that I can have a control over the content of the application and remove any potential inappropriate content
 
-##### Back to [top](#table-of-contents)
-
 
 ## Database
 
@@ -87,7 +85,9 @@ The following models were created to represent the database model structure of t
 - [Gunicorn](https://gunicorn.org/) was used for deploying the project to Heroku
 - [Pillow](https://pillow.readthedocs.io/en/stable/) was used for image processing and validation
 - [Psycopg2](https://www.psycopg.org/docs/) was used as a PostgreSQL database adapter for Python
-- [Postgres](https://www.postgresql.org/) – deployed project on Heroku uses a Postres database
+- [PostgreSQL](https://www.postgresql.org/) – deployed project on Heroku uses a PostgreSQL database
+
+##### Back to [top](#table-of-contents)
 
 
 ## Validation
@@ -95,4 +95,97 @@ The following models were created to represent the database model structure of t
 ### PEP8 Validation
 [PEP8](http://pep8online.com/) Validation Service was used to check the code for PEP8 requirements. All the code passes with no errors or warnings.
 
+
 ##### Back to [top](#table-of-contents)
+
+
+## Deployment
+
+### Heroku Deployment
+This application has been deployed from GitHub to Heroku by following the steps:
+
+1. Create or log in to your account at heroku.com
+2. Create a new app, add a unique app name (this project is named "snapfood-drf-api") and choose your region
+3. Click on create app
+4. Under resources tab search for Postgres in Add-ons section, and add a Postgres database to the app. PostgreSQL DATABASE_URL will be added to the app Config Vars.
+5. Install the libraries dj-database-url and psycopg2 (pip install dj_database_url psycopg2)
+6. In settings.py file import dj_database_url
+7. In settings.py add if statement to the databases variable. This is to keep the development and production environments and their databases separate.
+  ```
+  DATABASES = {
+      'default': ({
+          'ENGINE': 'django.db.backends.sqlite3',
+          'NAME': BASE_DIR / 'db.sqlite3',
+      } if 'DEV' in os.environ else dj_database_url.parse(
+          os.environ.get('DATABASE_URL')
+      ))
+  }
+  ```
+8. Install and configure django-cors headers and gunicorn libraries
+
+9. Create a Procfile in your app: 
+   ```
+   release: python manage.py makemigrations && python manage.py migrate
+   web: gunicorn PROJECT_NAME.wsgi
+   ```
+   The first line is to ensure that migrations are created and applied to the Heroku postgres database.
+   The second line tells Heroku to serve our app using gunicorn.
+
+10. Set the ALLOWED_HOSTS 
+   ```
+   ALLOWED_HOSTS = [
+    os.environ.get('ALLOWED_HOST'),
+    'localhost',
+   ]
+   ```
+
+11. Install Django cors headers library (pip install django-cors-headers), add it to the installed apps and to a middleware class in the settings.py - 'corsheaders.middleware.CorsMiddleware'.
+
+12. In settings.py, update the CORS_ALLOWED_ORIGIN_REGEXES variable to match your local server url.
+   ```
+    if 'CLIENT_ORIGIN_DEV' in os.environ:
+        extracted_url = re.match(r'^.+-', os.environ.get('CLIENT_ORIGIN_DEV', ''), re.IGNORECASE).group(0)
+        CORS_ALLOWED_ORIGIN_REGEXES = [
+            rf"{extracted_url}(eu|us)\d+\w\.gitpod\.io$",
+        ]
+   ```
+
+13. Add JWT_AUTH_SAMESITE = 'None' to be able to have the front end app and the API deploted to different platforms
+
+14. Add remaining environment variables settings to env.py file at the root directory. Make sure to add this file to .gitignore.
+    ```
+        import os
+        os.environ["CLOUDINARY_URL"] = "your cloudinary url"
+        os.environ['DEV'] = '1'
+        os.environ["SECRET_KEY"] = "your secret_key"
+    ```
+
+15. Replace the insecure SECRET_KEY with the environment variable
+  ```
+  SECRET_KEY = os.enrivon.get('SECRET_KEY')
+  ```
+
+16. Change the DEBUG settings DEBUG = 'DEV' in os.environ (it will equal False in production)
+
+17. Go to Settings in your Heroku and set the environment variables in the Config Vars. PostgreSQL DATABASE_URL should already be there.
+
+    ```
+    ALLOWED_HOST | your_deployed_api_url  
+    CLIENT_ORIGIN | your_deployed_frontend_url
+    CLIENT_ORIGIN_DEV | your_local_server_url
+    CLOUDINARY_URL | your_API_variable
+    DATABASE | created when added Postgres to Heroku Add-ons
+    SECRET_KEY | your_secret_key
+    DISABLE_COLLECTSTATIC | 1
+    ```
+
+18. Update the requirements.txt file to ensure the deployment doesn't fail by writing in the terminal "pip3 freeze --local > requirements.txt"
+
+19. Push your changes to GitHub
+
+20. Push the code to Heroku using the command git push heroku main
+
+- Go to "Deploy" in the menu bar on the top
+- Deployment method: Heroku Git (direct connection to GitHub is no longer available)
+- Follow steps as shown:
+  ![Deployment steps](docs/readme/heroku-deployment.png)
