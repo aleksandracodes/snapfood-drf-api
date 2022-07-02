@@ -11,6 +11,7 @@ This repository contains the API set up using Django REST Framework for the Snap
   - [Database](#database)
   - [Technologies Used](#technologies-used)
   - [Validation](#validation)
+  - [Deployment](#deployment)
 
 ## User Stories
 
@@ -96,6 +97,82 @@ The following models were created to represent the database model structure of t
 [PEP8](http://pep8online.com/) Validation Service was used to check the code for PEP8 requirements. All the code passes with no errors or warnings.
 
 
+## Testing
+
+### Manual testing of user stories
+
+- As an admin, I want to be able to create, edit and delete the users, posts, comments and likes, so that I can have a control over the content of the application and remove any potential inappropriate content
+
+**Test** | **Action** | **Expected Result** | **Actual Result**
+-------- | ------------------- | ------------------- | -----------------
+User | Create, update & delete user | A user can be created, edited or deleted | Works as expected
+User | Change permissions | User permissions can be updated | Works as expected
+Profile | Create, update & delete | User profile can be created, edited or deleted | Works as expected
+Post | Create, update & delete | A post can be created, edited or deleted | Works as expected
+Comment | Create, update & delete | A comment can be created, edited or deleted | Works as expected
+Like | Create & delete | A like can be created or deleted (like / unlike post) | Works as expected
+Follower | Create & delete | Follow or unfollow user | Works as expected
+
+<details><summary>Screenshots - USER</summary>
+    <details><summary>Create user</summary>
+    <img src="docs/readme/testing/user-create-test.png">
+    </details>
+    <details><summary>Change user permissions</summary>
+    <img src="docs/readme/testing/user-change-permissions-test.png">
+    </details>
+</details>
+
+<details><summary>Screenshots - PROFILE</summary>
+    <details><summary>Update profile</summary>
+    <img src="docs/readme/testing/profile-update-test.png">
+    </details>
+        <details><summary>Delete profile</summary>
+    <img src="docs/readme/testing/profile-delete-test.png">
+    </details>
+</details>
+
+<details><summary>Screenshots - POST</summary>
+    <details><summary>Create post</summary>
+    <img src="docs/readme/testing/post-create-test.png">
+    </details>
+    <details><summary>Update post</summary>
+    <img src="docs/readme/testing/post-update-test.png">
+    </details>
+    <details><summary>Delete post</summary>
+    <img src="docs/readme/testing/post-delete-test.png">
+    </details>
+</details>
+
+<details><summary>Screenshots - COMMENT</summary>
+    <details><summary>Create comment</summary>
+    <img src="docs/readme/testing/comment-create-test.png">
+    </details>
+    <details><summary>Update comment</summary>
+    <img src="docs/readme/testing/comment-update-test.png">
+    </details>
+    <details><summary>Delete comment</summary>
+    <img src="docs/readme/testing/comment-delete-test.png">
+    </details>
+</details>
+
+<details><summary>Screenshots - LIKE</summary>
+    <details><summary>Create like - like post</summary>
+    <img src="docs/readme/testing/like-create-test.png">
+    </details>
+    <details><summary>Delete like - unlike post</summary>
+    <img src="docs/readme/testing/like-delete-test.png">
+    </details>
+</details>
+
+<details><summary>Screenshots - FOLLOWER</summary>
+    <details><summary>Create - Follow user</summary>
+    <img src="docs/readme/testing/follower-create-test.png">
+    </details>
+    <details><summary>Delete - Unfollow user</summary>
+    <img src="docs/readme/testing/follower-delete-test.png">
+    </details>
+</details>
+
 ##### Back to [top](#table-of-contents)
 
 
@@ -111,16 +188,16 @@ This application has been deployed from GitHub to Heroku by following the steps:
 5. Install the libraries dj-database-url and psycopg2 (pip install dj_database_url psycopg2)
 6. In settings.py file import dj_database_url
 7. In settings.py add if statement to the databases variable. This is to keep the development and production environments and their databases separate.
-  ```
-  DATABASES = {
-      'default': ({
-          'ENGINE': 'django.db.backends.sqlite3',
-          'NAME': BASE_DIR / 'db.sqlite3',
-      } if 'DEV' in os.environ else dj_database_url.parse(
-          os.environ.get('DATABASE_URL')
-      ))
-  }
-  ```
+    ```
+    DATABASES = {
+        'default': ({
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        } if 'DEV' in os.environ else dj_database_url.parse(
+            os.environ.get('DATABASE_URL')
+        ))
+    }
+    ```
 8. Install and configure django-cors headers and gunicorn libraries
 
 9. Create a Procfile in your app: 
@@ -132,38 +209,38 @@ This application has been deployed from GitHub to Heroku by following the steps:
    The second line tells Heroku to serve our app using gunicorn.
 
 10. Set the ALLOWED_HOSTS 
-   ```
-   ALLOWED_HOSTS = [
-    os.environ.get('ALLOWED_HOST'),
-    'localhost',
-   ]
-   ```
+    ```
+    ALLOWED_HOSTS = [
+      os.environ.get('ALLOWED_HOST'),
+      'localhost',
+    ]
+    ```
 
 11. Install Django cors headers library (pip install django-cors-headers), add it to the installed apps and to a middleware class in the settings.py - 'corsheaders.middleware.CorsMiddleware'.
 
 12. In settings.py, update the CORS_ALLOWED_ORIGIN_REGEXES variable to match your local server url.
-   ```
+    ```
     if 'CLIENT_ORIGIN_DEV' in os.environ:
         extracted_url = re.match(r'^.+-', os.environ.get('CLIENT_ORIGIN_DEV', ''), re.IGNORECASE).group(0)
         CORS_ALLOWED_ORIGIN_REGEXES = [
             rf"{extracted_url}(eu|us)\d+\w\.gitpod\.io$",
         ]
-   ```
+    ```
 
 13. Add JWT_AUTH_SAMESITE = 'None' to be able to have the front end app and the API deploted to different platforms
 
 14. Add remaining environment variables settings to env.py file at the root directory. Make sure to add this file to .gitignore.
     ```
-        import os
-        os.environ["CLOUDINARY_URL"] = "your cloudinary url"
-        os.environ['DEV'] = '1'
-        os.environ["SECRET_KEY"] = "your secret_key"
+    import os
+      os.environ["CLOUDINARY_URL"] = "your cloudinary url"
+      os.environ['DEV'] = '1'
+      os.environ["SECRET_KEY"] = "your secret_key"
     ```
 
 15. Replace the insecure SECRET_KEY with the environment variable
-  ```
-  SECRET_KEY = os.enrivon.get('SECRET_KEY')
-  ```
+    ```
+    SECRET_KEY = os.enrivon.get('SECRET_KEY')
+    ```
 
 16. Change the DEBUG settings DEBUG = 'DEV' in os.environ (it will equal False in production)
 
