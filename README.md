@@ -11,7 +11,9 @@ This repository contains the API set up using Django REST Framework for the Snap
   - [Database](#database)
   - [Technologies Used](#technologies-used)
   - [Validation](#validation)
+  - [Testing](#testing)
   - [Deployment](#deployment)
+  - [Credits](#credits)
 
 ## User Stories
 
@@ -112,6 +114,8 @@ Post | Create, update & delete | A post can be created, edited or deleted | Work
 Comment | Create, update & delete | A comment can be created, edited or deleted | Works as expected
 Like | Create & delete | A like can be created or deleted (like / unlike post) | Works as expected
 Follower | Create & delete | Follow or unfollow user | Works as expected
+
+In addition, posts, comments, likes and following can be created by logged-in users only. Users can only update or delete the content which was created by themselves.
 
 <details><summary>Screenshots - USER</summary>
     <details><summary>Create user</summary>
@@ -266,3 +270,19 @@ This application has been deployed from GitHub to Heroku by following the steps:
 - Deployment method: Heroku Git (direct connection to GitHub is no longer available)
 - Follow steps as shown:
   ![Deployment steps](docs/readme/heroku-deployment.png)
+
+##### Back to [top](#table-of-contents)
+
+
+## Credits
+
+### Images
+
+- User avatar default image taken from [here](https://community.atlassian.com/t5/Jira-questions/JIRA-Anonymous-users-can-t-see-user-avatars/qaq-p/1060103) and colors changed using Paint
+- Default post image found [here](https://www.fiverr.com/logo-maker/brief/logo_name?brief_id=0d212c49-2416-401d-99a5-780b9b233ff7) and tweaked with Paint
+
+### Code
+
+This project was created based on the Code Institute's Django REST API walkthrough project ['Moments'](https://github.com/Code-Institute-Solutions/drf-api) which was a great learning experience.
+
+##### Back to [top](#table-of-contents)
