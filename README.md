@@ -54,7 +54,7 @@ The following models were created to represent the database model structure of t
 
 #### Comment Model
 
-- The Comment model contains the following fields: owner, post, created_on, updated_on and comment_content
+- The Comment model contains the following fields: owner, post, created_on, updated_on and content
 - ForeignKey relation between the owner field and the User model id field
 - ForeignKey relation between the post field and the User model post field
 
