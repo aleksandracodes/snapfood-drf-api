@@ -13,6 +13,7 @@ class Post(models.Model):
     category_choices = [
         ('spanish', 'Spanish'),
         ('polish', 'Polish'),
+        ('portuguese', 'Portuguese'),
         ('greek', 'Greek'),
         ('italian', 'Italian'),
         ('turkish', 'Turkish'),
