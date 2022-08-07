@@ -11,26 +11,26 @@ class Post(models.Model):
     A class for the post model
     """
     category_choices = [
-        ('spanish', 'Spanish'),
-        ('polish', 'Polish'),
-        ('portuguese', 'Portuguese'),
-        ('greek', 'Greek'),
-        ('italian', 'Italian'),
-        ('turkish', 'Turkish'),
-        ('french', 'French'),
-        ('moroccan', 'Moroccan'),
-        ('british', 'British'),
-        ('german', 'German'),
-        ('austrian', 'Austrian'),
-        ('lebanese', 'Lebanese'),
-        ('caribbean', 'Caribbean'),
-        ('indian', 'Indian'),
-        ('thai', 'Thai'),
-        ('japanese', 'Japanese'),
-        ('chinese', 'Chinese'),
-        ('mexican', 'Mexican'),
-        ('american', 'American'),
-        ('other', 'Other')
+        ('Spanish', 'Spanish'),
+        ('Polish', 'Polish'),
+        ('Portuguese', 'Portuguese'),
+        ('Greek', 'Greek'),
+        ('Italian', 'Italian'),
+        ('Turkish', 'Turkish'),
+        ('French', 'French'),
+        ('Moroccan', 'Moroccan'),
+        ('British', 'British'),
+        ('German', 'German'),
+        ('Austrian', 'Austrian'),
+        ('Lebanese', 'Lebanese'),
+        ('Caribbean', 'Caribbean'),
+        ('Indian', 'Indian'),
+        ('Thai', 'Thai'),
+        ('Japanese', 'Japanese'),
+        ('Chinese', 'Chinese'),
+        ('Mexican', 'Mexican'),
+        ('American', 'American'),
+        ('Other', 'Other')
     ]
 
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
