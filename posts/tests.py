@@ -36,3 +36,21 @@ class PostListViewTests(APITestCase):
         self.assertEqual(post_count, 1)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
+    def test_post_must_include_all_required_fields(self):
+        """
+        Test to verify if post can be created
+        without filling in mandatory fields (post title & category)
+        """
+        self.client.login(username='aleks', password='password')
+        response = self.client.post('/posts/', {'category': 'Spanish'})
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_user_can_list_posts(self):
+        """
+        Test that posts present in the database can be listed
+        """
+        aleks = User.objects.get(username='aleks')
+        Post.objects.create(owner=aleks, title='post title')
+        response = self.client.get('/posts/')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        # print('response.data:', response.data)
