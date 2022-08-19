@@ -77,7 +77,9 @@ The following models were created to represent the database model structure of t
 
 ### Libraries & Tools
 
+- [APITestCase](https://www.django-rest-framework.org/api-guide/testing/) - Django Rest Framework APITestCase was used for automated testing
 - [Cloudinary](https://cloudinary.com/) to store static files and serve them to Heroku
+- [Coverage](https://coverage.readthedocs.io/en/6.4.4/) used to produce automated testing report
 - [Dbdiagram.io](https://dbdiagram.io/home) used for the database schema diagram
 - [Git](https://git-scm.com/) was used for version control via Gitpod terminal to push the code to GitHub
 - [GitHub](https://github.com/) was used as a remote repository to store project code
@@ -101,6 +103,10 @@ The following models were created to represent the database model structure of t
 
 ## Testing
 
+The following tests were carried out on the app:
+1. Manual testing of user stories
+2. Automated testing
+
 ### Manual testing of user stories
 
 - As an admin, I want to be able to create, edit and delete the users, posts, comments and likes, so that I can have a control over the content of the application and remove any potential inappropriate content
@@ -119,62 +125,75 @@ In addition, posts, comments, likes and following can be created by logged-in us
 
 <details><summary>Screenshots - USER</summary>
     <details><summary>Create user</summary>
-    <img src="docs/readme/testing/user-create-test.png">
+    <img src="docs/testing/user-create-test.png">
     </details>
     <details><summary>Change user permissions</summary>
-    <img src="docs/readme/testing/user-change-permissions-test.png">
+    <img src="docs/testing/user-change-permissions-test.png">
     </details>
 </details>
 
 <details><summary>Screenshots - PROFILE</summary>
     <details><summary>Update profile</summary>
-    <img src="docs/readme/testing/profile-update-test.png">
+    <img src="docs/testing/profile-update-test.png">
     </details>
         <details><summary>Delete profile</summary>
-    <img src="docs/readme/testing/profile-delete-test.png">
+    <img src="docs/testing/profile-delete-test.png">
     </details>
 </details>
 
 <details><summary>Screenshots - POST</summary>
     <details><summary>Create post</summary>
-    <img src="docs/readme/testing/post-create-test.png">
+    <img src="docs/testing/post-create-test.png">
     </details>
     <details><summary>Update post</summary>
-    <img src="docs/readme/testing/post-update-test.png">
+    <img src="docs/testing/post-update-test.png">
     </details>
     <details><summary>Delete post</summary>
-    <img src="docs/readme/testing/post-delete-test.png">
+    <img src="docs/testing/post-delete-test.png">
     </details>
 </details>
 
 <details><summary>Screenshots - COMMENT</summary>
     <details><summary>Create comment</summary>
-    <img src="docs/readme/testing/comment-create-test.png">
+    <img src="docs/testing/comment-create-test.png">
     </details>
     <details><summary>Update comment</summary>
-    <img src="docs/readme/testing/comment-update-test.png">
+    <img src="docs/testing/comment-update-test.png">
     </details>
     <details><summary>Delete comment</summary>
-    <img src="docs/readme/testing/comment-delete-test.png">
+    <img src="docs/testing/comment-delete-test.png">
     </details>
 </details>
 
 <details><summary>Screenshots - LIKE</summary>
     <details><summary>Create like - like post</summary>
-    <img src="docs/readme/testing/like-create-test.png">
+    <img src="docs/testing/like-create-test.png">
     </details>
     <details><summary>Delete like - unlike post</summary>
-    <img src="docs/readme/testing/like-delete-test.png">
+    <img src="docs/testing/like-delete-test.png">
     </details>
 </details>
 
 <details><summary>Screenshots - FOLLOWER</summary>
     <details><summary>Create - Follow user</summary>
-    <img src="docs/readme/testing/follower-create-test.png">
+    <img src="docs/testing/follower-create-test.png">
     </details>
     <details><summary>Delete - Unfollow user</summary>
-    <img src="docs/readme/testing/follower-delete-test.png">
+    <img src="docs/testing/follower-delete-test.png">
     </details>
+</details>
+
+
+### Automated testing
+
+Automated testing was done using the Django Rest Framework APITestCase (a very similar to Django's TestCase). The report of overall testing was produced using the coverage tool (```$ coverage report``` & ```$ coverage html``` commands)
+
+- Tests summary
+
+<img src="docs/testing/apitestcase-snapfood.png">
+
+<details><summary>Detailed coverage report</summary>
+<img src="docs/testing/coverage-report-snapfood.jpg">
 </details>
 
 ##### Back to [top](#table-of-contents)
