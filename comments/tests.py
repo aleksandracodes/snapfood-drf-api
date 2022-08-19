@@ -29,7 +29,7 @@ class CommentListViewTests(APITestCase):
 class CommentDetailViewTests(APITestCase):
     def setUp(self):
         """
-        Contains two users with, post for each user and comments
+        Contains two users with post and comments for each
         """
         aleks = User.objects.create_user(username='aleks', password='password')
         dave = User.objects.create_user(username='dave', password='password')
